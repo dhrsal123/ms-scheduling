@@ -1,5 +1,6 @@
 package io.cinema.msscheduling.controller;
 
+import io.cinema.domain.annotations.HasEmployeeRole;
 import io.cinema.msscheduling.domain.dto.request.ScheduleMovieRequestDTO;
 import io.cinema.msscheduling.domain.dto.response.ScheduledMovieResponseDTO;
 import io.cinema.msscheduling.domain.dto.response.ScheduledMoviesResponseDTO;
@@ -37,6 +38,7 @@ public class SchedulingController {
         return schedulingService.getScheduledMovies(theaterId, branchId, page, size);
     }
 
+    @HasEmployeeRole
     @PostMapping
     public Mono<ScheduledMovieResponseDTO> saveScheduleMovie(
             @PathVariable UUID theaterId,
@@ -46,6 +48,7 @@ public class SchedulingController {
         return schedulingService.saveScheduleMovie(theaterId, branchId, scheduleMovieRequest);
     }
 
+    @HasEmployeeRole
     @PutMapping("/{scheduleId}")
     public Mono<ScheduledMovieResponseDTO> updateScheduleMovie(
             @PathVariable UUID theaterId,
@@ -56,6 +59,7 @@ public class SchedulingController {
         return schedulingService.updateScheduleMovie(theaterId, branchId, scheduleId, scheduleMovieRequest);
     }
 
+    @HasEmployeeRole
     @PutMapping("/{scheduleId}")
     public Mono<Void> deleteScheduleMovie(
             @PathVariable UUID theaterId,
