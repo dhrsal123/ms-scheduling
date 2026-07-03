@@ -3,11 +3,11 @@ package io.cinema.msscheduling.controller;
 import io.cinema.domain.annotations.HasEmployeeRole;
 import io.cinema.msscheduling.domain.dto.request.ScheduleMovieRequestDTO;
 import io.cinema.msscheduling.domain.dto.response.ScheduledMovieResponseDTO;
-import io.cinema.msscheduling.domain.dto.response.ScheduledMoviesResponseDTO;
 import io.cinema.msscheduling.service.SchedulingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,49 +24,49 @@ import java.util.UUID;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/theaters/{theaterId}/schedule-movies/{branchId}")
+@RequestMapping("/api/v1/theaters/{theaterId}/schedule-movies/{roomId}")
 public class SchedulingController {
     private final SchedulingService schedulingService;
 
     @GetMapping
-    public Flux<ScheduledMoviesResponseDTO> getScheduledMovies(
+    public Flux<ScheduledMovieResponseDTO> getScheduledMovies(
             @PathVariable UUID theaterId,
-            @PathVariable UUID branchId,
+            @PathVariable UUID roomId,
             @RequestParam int page,
             @RequestParam int size
     ) {
-        return schedulingService.getScheduledMovies(theaterId, branchId, page, size);
+        return schedulingService.getScheduledMovies(theaterId, roomId, page, size);
     }
 
     @HasEmployeeRole
     @PostMapping
     public Mono<ScheduledMovieResponseDTO> saveScheduleMovie(
             @PathVariable UUID theaterId,
-            @PathVariable UUID branchId,
+            @PathVariable UUID roomId,
             @Valid @RequestBody ScheduleMovieRequestDTO scheduleMovieRequest
     ) {
-        return schedulingService.saveScheduleMovie(theaterId, branchId, scheduleMovieRequest);
+        return schedulingService.saveScheduleMovie(theaterId, roomId, scheduleMovieRequest);
     }
 
     @HasEmployeeRole
     @PutMapping("/{scheduleId}")
     public Mono<ScheduledMovieResponseDTO> updateScheduleMovie(
             @PathVariable UUID theaterId,
-            @PathVariable UUID branchId,
+            @PathVariable UUID roomId,
             @PathVariable UUID scheduleId,
             @Valid @RequestBody ScheduleMovieRequestDTO scheduleMovieRequest
     ) {
-        return schedulingService.updateScheduleMovie(theaterId, branchId, scheduleId, scheduleMovieRequest);
+        return schedulingService.updateScheduleMovie(theaterId, roomId, scheduleId, scheduleMovieRequest);
     }
 
     @HasEmployeeRole
-    @PutMapping("/{scheduleId}")
+    @DeleteMapping("/{scheduleId}")
     public Mono<Void> deleteScheduleMovie(
             @PathVariable UUID theaterId,
-            @PathVariable UUID branchId,
+            @PathVariable UUID roomId,
             @PathVariable UUID scheduleId
     ) {
-        return schedulingService.deleteScheduleMovie(theaterId, branchId, scheduleId);
+        return schedulingService.deleteScheduleMovie(theaterId, roomId, scheduleId);
     }
 
 
