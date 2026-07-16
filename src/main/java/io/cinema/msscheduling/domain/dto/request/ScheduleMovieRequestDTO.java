@@ -13,14 +13,11 @@ public record ScheduleMovieRequestDTO(
         @NotNull(message = "movieId can't be null")
         UUID movieId,
 
-        @NotNull(message = "roomId can't be null")
-        UUID roomId,
-
-        @NotNull
+        @NotNull(message = "start can not be null.")
         @FutureOrPresent(message = "start time must be greater than the current date.")
         LocalDateTime start,
 
-        @NotNull
+        @NotNull(message = "end can not be null.")
         @Future(message = "end time must be greater than the current date.")
         LocalDateTime end
 ) {

@@ -20,7 +20,6 @@ public class ScheduledMovieEntity {
     private UUID id;
 
     private UUID theaterId;
-    private UUID branchId;
 
     private UUID roomId;
 

@@ -4,7 +4,6 @@ import io.cinema.msscheduling.domain.dto.request.ScheduleMovieRequestDTO;
 import io.cinema.msscheduling.domain.dto.response.MovieInfoResponseDTO;
 import io.cinema.msscheduling.domain.dto.response.ScheduledMovieResponseDTO;
 import io.cinema.msscheduling.domain.entity.ScheduledMovieEntity;
-import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -47,7 +46,6 @@ public interface ScheduledMovieMapper {
     @Mapping(target = "movieId", source = "dto.movieId")
     @Mapping(target = "start", source = "dto.start")
     @Mapping(target = "end", source = "dto.end")
-    @BeanMapping(unmappedTargetPolicy = ReportingPolicy.IGNORE)
     ScheduledMovieEntity partialUpdate(
             @MappingTarget ScheduledMovieEntity scheduledMovieEntity,
             ScheduleMovieRequestDTO dto,
