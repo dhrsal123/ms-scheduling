@@ -9,13 +9,10 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface ScheduledMoviesRepository extends R2dbcRepository<ScheduledMovieEntity, UUID> {
-    Flux<ScheduledMovieEntity> findAllBy(Pageable pageable);
-
-    Flux<ScheduledMovieEntity> findAllByEndGreaterThanEqual(LocalDateTime endIsGreaterThan, Pageable pageable);
 
     Flux<ScheduledMovieEntity> findAllByEndGreaterThanEqualAndTheaterIdAndRoomId(LocalDateTime endIsGreaterThan,
-                                                                                 Pageable pageable,
                                                                                  UUID theaterId,
-                                                                                 UUID roomId
+                                                                                 UUID roomId,
+                                                                                 Pageable pageable
     );
 }

@@ -2,7 +2,6 @@ package io.cinema.msscheduling.service;
 
 import io.cinema.msscheduling.domain.dto.request.ScheduleMovieRequestDTO;
 import io.cinema.msscheduling.domain.dto.response.ScheduledMovieResponseDTO;
-import io.cinema.msscheduling.domain.dto.response.ScheduledMoviesResponseDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -10,29 +9,29 @@ import java.util.UUID;
 
 public interface SchedulingService {
 
-    Flux<ScheduledMoviesResponseDTO> getScheduledMovies(
+    Flux<ScheduledMovieResponseDTO> getScheduledMovies(
             UUID theaterId,
-            UUID branchId,
+            UUID roomId,
             int page,
             int size
     );
 
     Mono<ScheduledMovieResponseDTO> saveScheduleMovie(
             UUID theaterId,
-            UUID branchId,
+            UUID roomId,
             ScheduleMovieRequestDTO scheduleMovieRequest
     );
 
     Mono<ScheduledMovieResponseDTO> updateScheduleMovie(
             UUID theaterId,
-            UUID branchId,
+            UUID roomId,
             UUID scheduleId,
             ScheduleMovieRequestDTO scheduleMovieRequest
     );
 
     Mono<Void> deleteScheduleMovie(
             UUID theaterId,
-            UUID branchId,
+            UUID roomId,
             UUID scheduleId
     );
 }
