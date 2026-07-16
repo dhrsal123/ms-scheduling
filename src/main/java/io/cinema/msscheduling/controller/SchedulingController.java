@@ -6,6 +6,8 @@ import io.cinema.msscheduling.domain.dto.response.ScheduledMovieResponseDTO;
 import io.cinema.msscheduling.service.SchedulingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,8 +28,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/theaters/{theaterId}/schedule-movies/{roomId}")
 public class SchedulingController {
+
+    private static final String CACHE_SCHEDULED_MOVIES = "scheduled_movies";
     private final SchedulingService schedulingService;
 
+    @Cacheable(key = "{#page, #size, #theaterId, #roomId}", value = CACHE_SCHEDULED_MOVIES)
     @GetMapping
     public Flux<ScheduledMovieResponseDTO> getScheduledMovies(
             @PathVariable UUID theaterId,
@@ -38,6 +43,7 @@ public class SchedulingController {
         return schedulingService.getScheduledMovies(theaterId, roomId, page, size);
     }
 
+    @CacheEvict(value = CACHE_SCHEDULED_MOVIES, allEntries = true)
     @HasEmployeeRole
     @PostMapping
     public Mono<ScheduledMovieResponseDTO> saveScheduleMovie(
@@ -48,6 +54,7 @@ public class SchedulingController {
         return schedulingService.saveScheduleMovie(theaterId, roomId, scheduleMovieRequest);
     }
 
+    @CacheEvict(value = CACHE_SCHEDULED_MOVIES, allEntries = true)
     @HasEmployeeRole
     @PutMapping("/{scheduleId}")
     public Mono<ScheduledMovieResponseDTO> updateScheduleMovie(
@@ -59,6 +66,7 @@ public class SchedulingController {
         return schedulingService.updateScheduleMovie(theaterId, roomId, scheduleId, scheduleMovieRequest);
     }
 
+    @CacheEvict(value = CACHE_SCHEDULED_MOVIES, allEntries = true)
     @HasEmployeeRole
     @DeleteMapping("/{scheduleId}")
     public Mono<Void> deleteScheduleMovie(
@@ -68,6 +76,5 @@ public class SchedulingController {
     ) {
         return schedulingService.deleteScheduleMovie(theaterId, roomId, scheduleId);
     }
-
 
 }
