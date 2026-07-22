@@ -1,5 +1,6 @@
 package io.cinema.msscheduling.domain.entity;
 
+import io.cinema.domain.entity.AuditableEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("scheduled_movie")
-public class ScheduledMovieEntity {
+public class ScheduledMovieEntity extends AuditableEntity {
     @Id
     private UUID id;
 
